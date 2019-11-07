@@ -93,6 +93,10 @@ public class product {
         return r;
     }
 
+    int addQuantity(Object id, Object qty) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }  
     
 
