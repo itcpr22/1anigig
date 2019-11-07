@@ -32,6 +32,7 @@ public class main extends javax.swing.JFrame {
     public main(String fname) {
         initComponents();
          jLabel2.setText("welcome " + fname);
+         refresh();
     }
     product product_obj = new product();
     conn con = new conn();
@@ -55,7 +56,7 @@ public class main extends javax.swing.JFrame {
             Statement stmt = (Statement) conn.createStatement();
             
             ResultSet rs = stmt.executeQuery(sql);
-            DefaultTableModel model = (DefaultTableModel) ptable.getModel();
+            DefaultTableModel model = (DefaultTableModel) pro_table.getModel();
             model.setRowCount(0);
             while(rs.next()){
                 model.addRow(new Object[]{rs.getString("Product_ID"),rs.getString("Product_name"),rs.getString("Quantity"),rs.getString("Price")});
@@ -89,9 +90,10 @@ public class main extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ptable = new javax.swing.JTable();
+        pro_table = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         pname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,7 +191,7 @@ public class main extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
-        ptable.setModel(new javax.swing.table.DefaultTableModel(
+        pro_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -205,12 +207,12 @@ public class main extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        ptable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(ptable);
-        if (ptable.getColumnModel().getColumnCount() > 0) {
-            ptable.getColumnModel().getColumn(0).setResizable(false);
-            ptable.getColumnModel().getColumn(1).setResizable(false);
-            ptable.getColumnModel().getColumn(3).setResizable(false);
+        pro_table.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(pro_table);
+        if (pro_table.getColumnModel().getColumnCount() > 0) {
+            pro_table.getColumnModel().getColumn(0).setResizable(false);
+            pro_table.getColumnModel().getColumn(1).setResizable(false);
+            pro_table.getColumnModel().getColumn(3).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -233,10 +235,18 @@ public class main extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
 
         jButton1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton1.setText("Add Product");
+        jButton1.setText("ADD PRODUCT");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jButton2.setText("DELETE");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -246,7 +256,9 @@ public class main extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -254,7 +266,9 @@ public class main extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(274, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(231, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -279,7 +293,7 @@ public class main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -325,6 +339,31 @@ public class main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_pnameActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+   int r = pro_table.getSelectedRow();
+        if(r==-1){
+            JOptionPane.showMessageDialog(rootPane, "Please Select a product", "Warning", JOptionPane.WARNING_MESSAGE);
+        }else{
+            id = pro_table.getValueAt(r, 0);
+            Object product_name = pro_table.getValueAt(r, 1);
+            int c = JOptionPane.showConfirmDialog(rootPane, "This will delete "+product_name+"?\nClick OK to continue","Confirm Delete",JOptionPane.OK_CANCEL_OPTION);
+            
+            if(c==JOptionPane.YES_OPTION){
+                int cc = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete "+product_name+"?","Delete",JOptionPane.YES_NO_OPTION);
+                if(cc==JOptionPane.YES_OPTION){
+                    int re = product_obj.deleteProduct(id);
+                    if(re==1){
+                        JOptionPane.showMessageDialog(rootPane, product_name+" Deleted from database");
+                        refresh();
+                    }
+                }
+            }
+            
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -363,6 +402,7 @@ public class main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_btn;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -374,7 +414,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JTextField pname;
     private javax.swing.JFormattedTextField pric;
     private javax.swing.JDialog pro_dialog;
-    private javax.swing.JTable ptable;
+    private javax.swing.JTable pro_table;
     private javax.swing.JSpinner quan;
     // End of variables declaration//GEN-END:variables
 }
