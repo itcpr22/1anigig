@@ -67,6 +67,32 @@ public class product {
         
         return r;
     }
+      public int editProduct(Object id, String Product_name, Object Price){
+        int r = 0;
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection conn = (Connection) DriverManager.getConnection(con.url,con.username,con.password);
+        
+        String sql = "UPDATE product SET Product_name = ?, Price = ? WHERE Product_ID = ?;";
+        PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
+        
+        pstmt.setString(1, Product_name);
+        float newprice = Float.parseFloat(Price.toString());
+        pstmt.setFloat(2, newprice);
+        String newid = (String) id;
+        pstmt.setString(3, newid);
+        
+        //System.out.println(pstmt);
+        r = pstmt.executeUpdate();
+        
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(product.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(product.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return r;
+    }
+
 }  
     
 
