@@ -22,6 +22,8 @@ public class reg_class {
     
     public int register(String Fname, String Lname, String username, String pword){
    
+    //String sql = "insert into users values(null,'"+username+"',md5('"+password+"'),'"+lastname+"','"+firstname+"',0)";    
+    //System.out.println(sql);
     int x = 0;
     
     try{
