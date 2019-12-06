@@ -52,14 +52,14 @@ public class main extends javax.swing.JFrame {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = (Connection) DriverManager.getConnection(con.url,con.username,con.password);
             
-            String sql = "select * from product;";
+            String sql = "select * from products;";
             Statement stmt = (Statement) conn.createStatement();
             
             ResultSet rs = stmt.executeQuery(sql);
             DefaultTableModel model = (DefaultTableModel) pro_table.getModel();
             model.setRowCount(0);
             while(rs.next()){
-                model.addRow(new Object[]{rs.getString("Product_ID"),rs.getString("Product_name"),rs.getString("Quantity"),rs.getString("Price")});
+                model.addRow(new Object[]{rs.getString("product_id"),rs.getString("product_name"),rs.getString("quantity"),rs.getString("price")});
             }
               
         } catch (ClassNotFoundException ex) {
@@ -74,7 +74,7 @@ public class main extends javax.swing.JFrame {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = (Connection) DriverManager.getConnection(con.url,con.username,con.password);
         
-            String sql = "SELECT * FROM product WHERE Product_ID LIKE ? OR Product_name LIKE ?";
+            String sql = "SELECT * FROM products WHERE product_id LIKE ? OR product_name LIKE ?";
             PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
             
             pstmt.setString(1, "%"+keyword+"%");
@@ -84,7 +84,7 @@ public class main extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) pro_table.getModel();
             model.setRowCount(0);
             while(rs.next()){
-                model.addRow(new Object[]{rs.getString("Product_ID"),rs.getString("Product_name"),rs.getString("Quantity"),rs.getString("Price")});
+                model.addRow(new Object[]{rs.getString("product_id"),rs.getString("product_name"),rs.getString("quantity"),rs.getString("price")});
             }     
             
         } catch (ClassNotFoundException ex) {
@@ -356,10 +356,9 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)))
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -371,9 +370,9 @@ public class main extends javax.swing.JFrame {
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         search_btn.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
